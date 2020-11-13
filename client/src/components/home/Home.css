@@ -1,0 +1,41 @@
+.Home-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    width: 100vw;
+    height: 100vh;
+}
+
+.Home-title {
+    margin-bottom: 30px;
+}
+
+.Home-loginForm {
+}
+
+.Home-loginForm form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.Home-loginForm form label {
+    padding: 5px;
+    
+    font-size: 1.5rem;
+}
+
+.Home-loginForm form input {
+    padding: 5px;
+    margin-bottom: 10px;
+
+    font-size: 1.3rem;
+}
+
+.Home-loginForm form button {
+    padding: 5px;
+
+    font-size: 1.1rem;
+}
