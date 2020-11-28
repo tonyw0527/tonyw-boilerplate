@@ -1,0 +1,35 @@
+.Register-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    width: 100vw;
+    height: 100vh;
+}
+
+.Register-title {
+    margin-bottom: 30px;
+}
+
+.Register-wrapper form {
+    display: flex;
+    flex-direction: column;
+}
+
+.Register-wrapper form label {
+    font-size: 1.3rem;
+
+}
+
+.Register-wrapper form input {
+    padding: 5px;
+    margin-bottom: 10px;
+
+    font-size: 1.3rem;
+}
+.Register-wrapper form button {
+    padding: 5px;
+
+    font-size: 1.1rem;
+}
