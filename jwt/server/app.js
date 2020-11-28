@@ -67,7 +67,10 @@ app.post('/auth/signup', (req, res) => {
 
 // logout
 app.get('/auth/logout', (req, res) => {
-    req.logout();
+    req.logout(); // 소용이 있는지 아직 모르겠음
+    // token 삭제
+    res.cookie('boilerplate', '');
+
     res.json('logout');
     console.log('logout')
 })
