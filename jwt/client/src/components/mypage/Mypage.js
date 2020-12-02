@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import Cookies from 'js-cookie';
 import './Mypage';
 import axios from 'axios';
 

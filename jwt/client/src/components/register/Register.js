@@ -10,25 +10,6 @@ const Register = () => {
     const [Password, setPassword] = useState('');
     const [Nickname, setNickname] = useState('');
 
-    const checkIsLogin = async () => {
-        await axios.get('/auth/logintest',{
-            withCredentials: true
-        }).then(res => {
-            console.log(res);
-            if(res.data === 'allow'){
-                history.push('/mypage');
-            }
-        })
-    }
-
-    useEffect(() => {
-        // checkIsLogin();
-        
-        return () => {
-            
-        }
-    }, [])
-
     return (
         <div className="Register-wrapper">
             <div className="Register-title">

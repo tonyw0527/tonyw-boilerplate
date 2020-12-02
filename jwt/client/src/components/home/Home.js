@@ -1,33 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import './Home.css';
 import axios from 'axios';
 
-const Home = () => {
+const Home = (props) => {
+    const { isLoggedIn, location } = props;
     const history = useHistory();
+    const { from } = location.state || { from: { pathname: '/' }};
 
     const [UserName, setUserName] = useState('');
     const [Password, setPassword] = useState('');
     const [IsKeepLogin, setIsKeepLogin] = useState(false);
 
-    useEffect(() => {
-        checkToken();
-
-        return () => {
-        
-        }
-    }, [])
-
-    const checkToken = async () => {
-        await axios.get('/user/test')
-        .then(res => {
-            console.log(res)
-            history.push('/mypage');
-        })
-        .catch(err => {
-            console.log('hi');
-            console.log(err.response.status);
-        });
+    if(isLoggedIn){
+        return <Redirect to={from} />
     }
 
     return (
@@ -47,7 +33,8 @@ const Home = () => {
                     { withCredentials: true }
                     ).then(res => {
                         console.log(res);
-                        history.push('/mypage')
+                        history.push('/mypage');
+                        console.log('here')
                     }).catch(e => {
                         console.log(e)
                         alert('아이디 또는 비밀번호가 다릅니다.')
@@ -75,7 +62,7 @@ const Home = () => {
                         Login
                     </button>
                     <button type="button" onClick={() => {
-                        history.push('/signup');
+                        history.push('/register');
                     }}>Sign Up</button>
                 </form>
             </div>
