@@ -9,10 +9,17 @@ const Mypage = () => {
     const history = useHistory();
 
     const checkToken = async () => {
-        const token = Cookies.get('boilerplate');
         await axios.get('/user/test')
         .then(res => console.log(res))
-        .catch(err => console.log(err));
+        .catch(err => {
+            console.log('hi');
+            console.log(err.response.status);
+            if(err.response.status === '419'){
+                alert('Token Expired. Please login again');
+            }
+            alert('Please login again');
+            history.push('/');
+        });
     }
 
     useEffect(() => {

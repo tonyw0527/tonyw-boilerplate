@@ -24,7 +24,8 @@ module.exports = () => {
         jwtFromRequest: cookieExtractor,
         secretOrKey: process.env.JWT_SECRET
     },
-    (jwtPayload, done) => {
+    (jwtPayload, done, info) => {
+        console.log('here')
         console.log(jwtPayload);
         User.findOne({ email: jwtPayload.email }, (err, user) => {
             if (err) {

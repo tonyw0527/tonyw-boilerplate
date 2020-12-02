@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Home.css';
 import axios from 'axios';
@@ -8,6 +8,27 @@ const Home = () => {
 
     const [UserName, setUserName] = useState('');
     const [Password, setPassword] = useState('');
+    const [IsKeepLogin, setIsKeepLogin] = useState(false);
+
+    useEffect(() => {
+        checkToken();
+
+        return () => {
+        
+        }
+    }, [])
+
+    const checkToken = async () => {
+        await axios.get('/user/test')
+        .then(res => {
+            console.log(res)
+            history.push('/mypage');
+        })
+        .catch(err => {
+            console.log('hi');
+            console.log(err.response.status);
+        });
+    }
 
     return (
         <div className="Home-wrapper">
@@ -20,7 +41,8 @@ const Home = () => {
                     axios.post('/auth/login',
                     {
                         email: UserName,
-                        password: Password
+                        password: Password,
+                        isKeepLogin: IsKeepLogin
                     },
                     { withCredentials: true }
                     ).then(res => {
@@ -40,7 +62,15 @@ const Home = () => {
                     <input id="login-password" type="password" maxLength="15" value={Password} onChange={(e)=>{
                         setPassword(e.target.value);
                     }} />
+
+                    <div>
+                        <input id="keep-login-btn" type="checkbox" checked={IsKeepLogin} onChange={() => {
+                            setIsKeepLogin(!IsKeepLogin);
+                        }} />
+                        <label htmlFor="keep-login-input">Keep Login</label>
+                    </div>
                     
+
                     <button type="submit" >
                         Login
                     </button>
