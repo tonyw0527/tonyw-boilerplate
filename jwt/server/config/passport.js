@@ -1,9 +1,19 @@
+require('dotenv').config();
 const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
-const ExtractJWT = passportJWT.ExtractJwt;
+// const ExtractJWT = passportJWT.ExtractJwt;
+const cookieExtractor = function(req) {
+    var token = null;
+    if (req && req.cookies)
+    {
+        token = req.cookies['boilerplate'];
+    }
+    return token;
+};
+
 const User = require('../models/user');
-require('dotenv').config();
+
 
 module.exports = () => {
     // Local Strategy
@@ -11,7 +21,7 @@ module.exports = () => {
 
     // JWT Strategy
     passport.use(new JWTStrategy({
-        jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+        jwtFromRequest: cookieExtractor,
         secretOrKey: process.env.JWT_SECRET
     },
     (jwtPayload, done) => {

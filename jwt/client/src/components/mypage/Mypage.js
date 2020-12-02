@@ -10,11 +10,7 @@ const Mypage = () => {
 
     const checkToken = async () => {
         const token = Cookies.get('boilerplate');
-        await axios.get('/auth/token', {
-            headers: {
-                Authorization: 'Bearer ' + token
-            }
-        })
+        await axios.get('/user/test')
         .then(res => console.log(res))
         .catch(err => console.log(err));
     }

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Home.css';
 import axios from 'axios';
@@ -8,30 +8,6 @@ const Home = () => {
 
     const [UserName, setUserName] = useState('');
     const [Password, setPassword] = useState('');
-
-    const checkIsLogin = async () => {
-        await axios.get('/auth/logintest',{
-            withCredentials: true
-        }).then(res => {
-            console.log(res);
-            if(res.data === 'allow'){
-                history.push('/mypage');
-            }
-        })
-    }
-
-    useEffect(() => {
-        try{
-            // checkIsLogin();
-        } catch(e) {
-            console.log(e);
-        }
-        
-        
-        return () => {
-            
-        }
-    }, [])
 
     return (
         <div className="Home-wrapper">

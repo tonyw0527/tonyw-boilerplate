@@ -37,7 +37,7 @@ const Register = () => {
             <form onSubmit={(e) => {
                 e.preventDefault();
                 
-                axios.post('/auth/signup', {
+                axios.post('/auth/register', {
                     email: UserName,
                     password: Password,
                     nickname: Nickname

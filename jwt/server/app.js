@@ -33,7 +33,6 @@ app.use(cookieParser()); // 쿠키 파싱
 // Passport
 const passport = require('passport');
 const passportConfig = require('./config/passport');
-const User = require('./models/user');
 app.use(passport.initialize());
 passportConfig();
 // passport.serializeUser(User.serializeUser());
@@ -41,51 +40,8 @@ passportConfig();
 
 
 // Routing
-// login - jwt 발급
-const AuthTokenController = require('./controllers/AuthTokenController');
-app.post('/auth/login', AuthTokenController.create);
+app.use('/api', require('./routes/api'));
 
-// api JWT 인증
-const UserController = require('./controllers/UserController');
-app.get('/auth/token', UserController.index);
-
-// register
-app.post('/auth/signup', (req, res) => {
-    User.register(
-        new User({ email: req.body.email, nickname: req.body.nickname }),
-        req.body.password,
-        (err, user) => {
-            if(err){
-                console.log(err);
-            } else {
-                console.log(user);
-                res.json('success');
-            }
-        }
-    )
-})
-
-// logout
-app.get('/auth/logout', (req, res) => {
-    req.logout(); // 소용이 있는지 아직 모르겠음
-    // token 삭제
-    res.cookie('boilerplate', '');
-
-    res.json('logout');
-    console.log('logout')
-})
-
-// isLogin
-app.get('/auth/logintest', (req, res) => {
-    console.log(req.isAuthenticated());
-    if(req.isAuthenticated()){
-        res.json('allow');
-        console.log('로그인 중')
-    } else {
-        res.json('notallow');
-        console.log('로그인중이 아님!!!!!')
-    }
-})
 
 app.listen((PORT), () => {
     console.log(`Server is running on ${PORT} now!`);
