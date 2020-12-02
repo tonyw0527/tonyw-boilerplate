@@ -3,18 +3,12 @@ import { useHistory, Redirect } from 'react-router-dom';
 import './Home.css';
 import axios from 'axios';
 
-const Home = (props) => {
-    const { isLoggedIn, location } = props;
+const Home = () => {
     const history = useHistory();
-    const { from } = location.state || { from: { pathname: '/' }};
 
     const [UserName, setUserName] = useState('');
     const [Password, setPassword] = useState('');
     const [IsKeepLogin, setIsKeepLogin] = useState(false);
-
-    if(isLoggedIn){
-        return <Redirect to={from} />
-    }
 
     return (
         <div className="Home-wrapper">
@@ -34,7 +28,6 @@ const Home = (props) => {
                     ).then(res => {
                         console.log(res);
                         history.push('/mypage');
-                        console.log('here')
                     }).catch(e => {
                         console.log(e)
                         alert('아이디 또는 비밀번호가 다릅니다.')
