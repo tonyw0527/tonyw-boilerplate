@@ -25,10 +25,12 @@ exports.login = (req, res) => {
             const email = user.email;
             const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '30 days'});
             res.cookie(APP_NAME, token, cookieOptions);
+            res.cookie('isToken', 1, { expires: anMonth }); // client side에서 라우팅할때 참고하는 용도
         } else {
             const email = user.email;
             const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '1 days'});
             res.cookie(APP_NAME, token, { httpOnly: true });
+            res.cookie('isToken', 1);
         }
         
         return res.json({
@@ -41,6 +43,7 @@ exports.logout = (req, res) => {
     req.logout(); // 소용이 있는지 아직 모르겠음
     // token 삭제
     res.clearCookie(APP_NAME);
+    res.clearCookie('isToken');
     res.json('logout');
     console.log('logout');
 }

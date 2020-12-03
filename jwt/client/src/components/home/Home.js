@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory, Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import './Home.css';
 import axios from 'axios';
 
@@ -9,6 +9,16 @@ const Home = () => {
     const [UserName, setUserName] = useState('');
     const [Password, setPassword] = useState('');
     const [IsKeepLogin, setIsKeepLogin] = useState(false);
+
+    useEffect(() => {
+        console.log(history.action);
+        if(history.action === 'REPLACE'){
+            alert('다시 로그인해주세요.')
+        }
+        return () => {
+            
+        }
+    }, [])
 
     return (
         <div className="Home-wrapper">

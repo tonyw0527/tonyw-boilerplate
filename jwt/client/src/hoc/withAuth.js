@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 export default (SpecialComponent, option, adminRoute=null) => {
 
@@ -10,37 +11,27 @@ export default (SpecialComponent, option, adminRoute=null) => {
     */
 
     const AuthenticateCheck = (props) => {
+        
+        const isToken = Cookies.get('isToken');
 
-        const checkToken = async () => {
-            await axios.get('/user/test')
-            .then(res => {
-                console.log(res)
-    
-                if(!option) {
-                    props.history.push('/mypage');
-                }
-            })
-            .catch(err => {
-                console.log('hi');
-                console.log(err.response.status);
-                
-                if(option){
-                    alert('로그인해주세요')
-                    props.history.push('/');
-                }
-                
-            });
+        if(isToken) {
+            console.log('토큰 있음')
+            if(!option) {
+                // 로그인 상태, 로그인 유저는 출입 불가 페이지로 접근한 경우(login, register)
+                // -> 로그인 유저 출입 가능 페이지로 이동(mypage)
+                return <Redirect to="/mypage" />
+            }
+        } else {
+            console.log('토큰 없음!!')
+            if(option){
+                // 로그아웃 상태, 로그인 유저만 출입 가능 페이지로 접근한 경우(mypage)
+                // -> 로그인 페이지로 안내
+                return <Redirect to="/" />
+            }
         }
-
-        useEffect(() => {
-            checkToken();
-
-        }, []);
-
         return (
-        <SpecialComponent />
+            <SpecialComponent />
         )
-
     };
 
     return AuthenticateCheck;
