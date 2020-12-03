@@ -12,8 +12,13 @@ export default (SpecialComponent, option, adminRoute=null) => {
 
     const AuthenticateCheck = (props) => {
         
+        // isToken이름의 쿠키를 참조.
+        // 이 쿠키가 있다고 사용자 정보에 접근 가능한 것은 아니고
+        // 단순히 redirect에만 이용.
+        // 권한이 필요한 데이터는 api 요청시 토큰 검증을 함.
         const isToken = Cookies.get('isToken');
 
+        // 비정상적인 접근
         if(isToken) {
             console.log('토큰 있음')
             if(!option) {
@@ -29,6 +34,8 @@ export default (SpecialComponent, option, adminRoute=null) => {
                 return <Redirect to="/" />
             }
         }
+
+        // 정상적인 접근
         return (
             <SpecialComponent />
         )

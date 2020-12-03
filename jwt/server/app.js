@@ -1,10 +1,10 @@
-// Expess
+// Express
 const express = require('express');
 const app = express();
 
+
 // Env
-const dotenv = require('dotenv');
-dotenv.config();
+require('dotenv').config();
 const PORT = process.env.PORT;
 const MONGODB_SECRET = process.env.MONGODB_SECRET;
 const MONGODB_DB_NAME = process.env.MONGODB_DB_NAME;
@@ -30,13 +30,12 @@ app.use(express.json()); // application/json 형태의 데이터 파싱
 app.use(express.urlencoded({extended: false})); // application/x-www-form-urlencoded 형태의 데이터 parsing
 app.use(cookieParser()); // 쿠키 파싱
 
+
 // Passport
 const passport = require('passport');
 const passportConfig = require('./config/passport');
 app.use(passport.initialize());
 passportConfig();
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
 
 
 // Routing

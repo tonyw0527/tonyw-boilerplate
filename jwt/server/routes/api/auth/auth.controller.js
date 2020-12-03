@@ -2,7 +2,8 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 require('dotenv').config();
 
-const APP_NAME = 'boilerplate';
+const TOKEN_COOKIE_NAME = process.env.TOKEN_COOKIE_NAME;
+const IS_TOKEN_COOKIE_NAME = process.env.IS_TOKEN_COOKIE_NAME;
 const anMonth = new Date(Date.now() + (1000 * 60 * 60 * 24 * 30));
 const cookieOptions = {expires: anMonth, httpOnly: true };
 const User = require('../../../models/user');
@@ -24,13 +25,13 @@ exports.login = (req, res) => {
         if(req.body.isKeepLogin) {
             const email = user.email;
             const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '30 days'});
-            res.cookie(APP_NAME, token, cookieOptions);
-            res.cookie('isToken', 1, { expires: anMonth }); // client side에서 라우팅할때 참고하는 용도
+            res.cookie(TOKEN_COOKIE_NAME, token, cookieOptions);
+            res.cookie(IS_TOKEN_COOKIE_NAME, 1, { expires: anMonth }); // client side에서 라우팅할때 참고하는 용도
         } else {
             const email = user.email;
             const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '1 days'});
-            res.cookie(APP_NAME, token, { httpOnly: true });
-            res.cookie('isToken', 1);
+            res.cookie(TOKEN_COOKIE_NAME, token, { httpOnly: true });
+            res.cookie(IS_TOKEN_COOKIE_NAME, 1);
         }
         
         return res.json({
@@ -42,8 +43,8 @@ exports.login = (req, res) => {
 exports.logout = (req, res) => {
     req.logout(); // 소용이 있는지 아직 모르겠음
     // token 삭제
-    res.clearCookie(APP_NAME);
-    res.clearCookie('isToken');
+    res.clearCookie(TOKEN_COOKIE_NAME);
+    res.clearCookie(IS_TOKEN_COOKIE_NAME);
     res.json('logout');
     console.log('logout');
 }

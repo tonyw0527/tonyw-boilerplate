@@ -2,12 +2,8 @@ const jwt = require('jsonwebtoken');
 const passport = require('passport');
 require('dotenv').config();
 
-const APP_NAME = 'boilerplate';
-const anYear = new Date(Date.now() + (1000 * 60 * 60 * 24 * 365));
-const cookieOptions = {expires: anYear};
-
 const authMiddleware = (req, res, next) => {
-    console.log(req.headers);
+    //console.log(req.headers);
     console.log('토큰 검증 라우터');
 
     passport.authenticate('jwt', {session: false}

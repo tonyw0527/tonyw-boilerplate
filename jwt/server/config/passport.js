@@ -3,11 +3,12 @@ const passport = require('passport');
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
 // const ExtractJWT = passportJWT.ExtractJwt;
+
 const cookieExtractor = function(req) {
     var token = null;
     if (req && req.cookies)
     {
-        token = req.cookies['boilerplate'];
+        token = req.cookies[process.env.TOKEN_COOKIE_NAME];
     }
     return token;
 };
@@ -24,7 +25,7 @@ module.exports = () => {
         jwtFromRequest: cookieExtractor,
         secretOrKey: process.env.JWT_SECRET
     },
-    (jwtPayload, done, info) => {
+    (jwtPayload, done) => {
         console.log('here')
         console.log(jwtPayload);
         User.findOne({ email: jwtPayload.email }, (err, user) => {

@@ -11,19 +11,16 @@ const Home = () => {
     const [IsKeepLogin, setIsKeepLogin] = useState(false);
 
     useEffect(() => {
-        console.log(history.action);
+        // Redirect alert
         if(history.action === 'REPLACE'){
-            alert('다시 로그인해주세요.')
+            alert('Please login again.')
         }
-        return () => {
-            
-        }
-    }, [])
+    }, [history.action]);
 
     return (
         <div className="Home-wrapper">
             <div className="Home-title">
-                <h1>Welcome to BoilerPlate!</h1>
+                <h1>Tonyw JWT BoilerPlate!</h1>
             </div>
             <div className="Home-loginForm">
                 <form onSubmit={(e) => {
@@ -36,12 +33,15 @@ const Home = () => {
                     },
                     { withCredentials: true }
                     ).then(res => {
-                        console.log(res);
-                        history.push('/mypage');
+                        if(res.status === 200){
+                            history.push('/mypage');
+                        }
                     }).catch(e => {
                         console.log(e)
                         alert('아이디 또는 비밀번호가 다릅니다.')
                     });
+                    setUserName('');
+                    setPassword('');
                 }}>
                     <label htmlFor="login-username">Email</label>
                     <input id="login-username" type="email" maxLength="25" value={UserName} onChange={(e)=>{
