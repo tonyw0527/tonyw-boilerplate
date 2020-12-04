@@ -1,8 +1,9 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import Cookies from 'js-cookie';
+import { observer } from 'mobx-react';
+import { useUserStore } from '../states/user/userContext';
 
-export default (SpecialComponent, option, adminRoute=null) => {
+const withAuth = (SpecialComponent, option, adminRoute=null) => {
 
     /* 
         예)  option: null -> 누구나 출입이 가능한 페이지 (home)
@@ -10,13 +11,16 @@ export default (SpecialComponent, option, adminRoute=null) => {
                     false -> 로그인한 유저는 출입이 불가능한 페이지
     */
 
-    const AuthenticateCheck = (props) => {
+    const AuthenticateCheck = observer(() => {
         
         // isToken이름의 쿠키를 참조.
         // 이 쿠키가 있다고 사용자 정보에 접근 가능한 것은 아니고
         // 단순히 redirect에만 이용.
         // 권한이 필요한 데이터는 api 요청시 토큰 검증을 함.
-        const isToken = Cookies.get('isToken');
+        //const isToken = Cookies.get('isToken');
+        const UserStore = useUserStore();
+        UserStore.checkIsToken();
+        const isToken = UserStore.isLoggedIn;
 
         // 비정상적인 접근
         if(isToken) {
@@ -39,8 +43,10 @@ export default (SpecialComponent, option, adminRoute=null) => {
         return (
             <SpecialComponent />
         )
-    };
+    });
 
     return AuthenticateCheck;
 
 };
+
+export default withAuth;
