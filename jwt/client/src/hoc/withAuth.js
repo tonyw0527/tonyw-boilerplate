@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { useUserStore } from '../states/user/userContext';
+import { useUserStore } from '../stores/userStore';
 
 const withAuth = (SpecialComponent, option, adminRoute=null) => {
 

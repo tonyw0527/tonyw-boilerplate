@@ -1,3 +1,4 @@
+import { createContext, useContext } from 'react';
 import Cookies from 'js-cookie';
 import { runInAction, autorun, makeAutoObservable } from 'mobx';
 
@@ -42,4 +43,16 @@ class UserStore {
     */
 }
 
-export default UserStore;
+const UserContext = createContext();
+
+// Provider - for index.js
+export const UserProvider = ({ children }) => {
+    return (
+        <UserContext.Provider value={new UserStore} >
+            {children}
+        </UserContext.Provider>
+    )
+}
+
+// useStore - for components
+export const useUserStore = () => useContext(UserContext);
