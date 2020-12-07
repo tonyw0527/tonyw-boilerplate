@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Home.css';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Home = () => {
     const history = useHistory();
@@ -9,6 +10,25 @@ const Home = () => {
     const [UserName, setUserName] = useState('');
     const [Password, setPassword] = useState('');
     const [IsKeepLogin, setIsKeepLogin] = useState(false);
+    const [IsKeepId, setIsKeepId] = useState(false);
+
+    useEffect(() => {
+        const isKeepId = Cookies.get('IsKeepId');
+        if(isKeepId === '1'){
+            setIsKeepId(true);
+        } else if(isKeepId === '0') {
+            setIsKeepId(false);
+        }
+
+        const saved_id = Cookies.get('saved_id');
+        if(saved_id){
+            setUserName(saved_id);
+        }
+
+        return () => {
+        
+        }
+    }, [])
 
     useEffect(() => {
         // Redirect alert
@@ -40,6 +60,11 @@ const Home = () => {
                         console.log(e)
                         alert('아이디 또는 비밀번호가 다릅니다.')
                     });
+                    if(IsKeepId){
+                        Cookies.set('saved_id', UserName);
+                    } else {
+                        Cookies.remove('saved_id');
+                    }
                     setUserName('');
                     setPassword('');
                 }}>
@@ -54,7 +79,18 @@ const Home = () => {
                     }} />
 
                     <div>
-                        <input id="keep-login-btn" type="checkbox" checked={IsKeepLogin} onChange={() => {
+                        <input id="keep-id-input" type="checkbox" checked={IsKeepId} onChange={() => {
+                            if(IsKeepId){
+                                Cookies.set('IsKeepId', 0);
+                            } else {
+                                Cookies.set('IsKeepId', 1);
+                            }
+                            setIsKeepId(!IsKeepId);
+                        }} />
+                        <label htmlFor="keep-id-input">Save ID</label>
+                    </div>
+                    <div>
+                        <input id="keep-login-input" type="checkbox" checked={IsKeepLogin} onChange={() => {
                             setIsKeepLogin(!IsKeepLogin);
                         }} />
                         <label htmlFor="keep-login-input">Keep Login</label>

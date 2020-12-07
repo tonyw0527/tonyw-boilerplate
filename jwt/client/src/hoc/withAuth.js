@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useUserStore } from '../stores/userStore';
@@ -19,7 +19,12 @@ const withAuth = (SpecialComponent, option, adminRoute=null) => {
         // 권한이 필요한 데이터는 api 요청시 토큰 검증을 함.
         //const isToken = Cookies.get('isToken');
         const UserStore = useUserStore();
-        UserStore.checkIsToken();
+        useEffect(() => {
+            UserStore.checkIsToken();    
+            return () => {
+             
+            }
+        });
         const isToken = UserStore.isLoggedIn;
 
         // 비정상적인 접근
