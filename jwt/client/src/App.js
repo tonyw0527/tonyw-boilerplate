@@ -7,9 +7,8 @@ import Mypage from './components/mypage/Mypage';
 import withAuth from './hoc/withAuth';
 
 const App = () => {
-
+    
     return (
-
         <BrowserRouter>
             <Switch>
                 <Route path="/" component={withAuth(Home, false)} exact />

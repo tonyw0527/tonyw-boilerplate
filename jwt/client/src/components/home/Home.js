@@ -10,25 +10,6 @@ const Home = () => {
     const [UserName, setUserName] = useState('');
     const [Password, setPassword] = useState('');
     const [IsKeepLogin, setIsKeepLogin] = useState(false);
-    const [IsKeepId, setIsKeepId] = useState(false);
-
-    useEffect(() => {
-        const isKeepId = Cookies.get('IsKeepId');
-        if(isKeepId === '1'){
-            setIsKeepId(true);
-        } else if(isKeepId === '0') {
-            setIsKeepId(false);
-        }
-
-        const saved_id = Cookies.get('saved_id');
-        if(saved_id){
-            setUserName(saved_id);
-        }
-
-        return () => {
-        
-        }
-    }, [])
 
     useEffect(() => {
         // Redirect alert
@@ -60,45 +41,28 @@ const Home = () => {
                         console.log(e)
                         alert('아이디 또는 비밀번호가 다릅니다.')
                     });
-                    if(IsKeepId){
-                        Cookies.set('saved_id', UserName);
-                    } else {
-                        Cookies.remove('saved_id');
-                    }
+
                     setUserName('');
                     setPassword('');
                 }}>
-                    <label htmlFor="login-username">Email</label>
-                    <input id="login-username" type="email" maxLength="25" value={UserName} onChange={(e)=>{
+                    <input type="email" placeholder="Email" maxLength="25" value={UserName} onChange={(e)=>{
                         setUserName(e.target.value);
                     }} />
                     
-                    <label htmlFor="login-password">Password</label>
-                    <input id="login-password" type="password" maxLength="15" value={Password} onChange={(e)=>{
+                    <input type="password" placeholder="Password" maxLength="15" value={Password} onChange={(e)=>{
                         setPassword(e.target.value);
                     }} />
 
                     <div>
-                        <input id="keep-id-input" type="checkbox" checked={IsKeepId} onChange={() => {
-                            if(IsKeepId){
-                                Cookies.set('IsKeepId', 0);
-                            } else {
-                                Cookies.set('IsKeepId', 1);
-                            }
-                            setIsKeepId(!IsKeepId);
-                        }} />
-                        <label htmlFor="keep-id-input">Save ID</label>
-                    </div>
-                    <div>
                         <input id="keep-login-input" type="checkbox" checked={IsKeepLogin} onChange={() => {
                             setIsKeepLogin(!IsKeepLogin);
                         }} />
-                        <label htmlFor="keep-login-input">Keep Login</label>
+                        <label htmlFor="keep-login-input">Stay signed in</label>
                     </div>
                     
 
                     <button type="submit" >
-                        Login
+                        Sign In
                     </button>
                     <button type="button" onClick={() => {
                         history.push('/register');

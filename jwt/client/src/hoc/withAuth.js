@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { useUserStore } from '../stores/userStore';
 
@@ -12,37 +12,33 @@ const withAuth = (SpecialComponent, option, adminRoute=null) => {
     */
 
     const AuthenticateCheck = observer(() => {
-        
-        // isToken이름의 쿠키를 참조.
-        // 이 쿠키가 있다고 사용자 정보에 접근 가능한 것은 아니고
-        // 단순히 redirect에만 이용.
-        // 권한이 필요한 데이터는 api 요청시 토큰 검증을 함.
-        //const isToken = Cookies.get('isToken');
+        const history = useHistory();
         const UserStore = useUserStore();
+        
         useEffect(() => {
-            UserStore.checkIsToken();    
+
+            UserStore.checkIsToken()
+            .then(res => {
+                console.log(res);
+                if(!option) {
+                    // 로그인 상태, 로그인 유저는 출입 불가 페이지로 접근한 경우(login, register)
+                    // -> 로그인 유저 출입 가능 페이지로 이동(mypage)
+                    history.replace('/mypage');
+                }
+            })
+            .catch(err => {
+                console.log(err.response.status);
+                if(option){
+                    // 로그아웃 상태, 로그인 유저만 출입 가능 페이지로 접근한 경우(mypage)
+                    // -> 로그인 페이지로 안내
+                    history.replace('/');
+                }
+            })
+            
             return () => {
              
             }
         });
-        const isToken = UserStore.isLoggedIn;
-
-        // 비정상적인 접근
-        if(isToken) {
-            console.log('토큰 있음')
-            if(!option) {
-                // 로그인 상태, 로그인 유저는 출입 불가 페이지로 접근한 경우(login, register)
-                // -> 로그인 유저 출입 가능 페이지로 이동(mypage)
-                return <Redirect to="/mypage" />
-            }
-        } else {
-            console.log('토큰 없음!!')
-            if(option){
-                // 로그아웃 상태, 로그인 유저만 출입 가능 페이지로 접근한 경우(mypage)
-                // -> 로그인 페이지로 안내
-                return <Redirect to="/" />
-            }
-        }
 
         // 정상적인 접근
         return (
@@ -51,7 +47,6 @@ const withAuth = (SpecialComponent, option, adminRoute=null) => {
     });
 
     return AuthenticateCheck;
-
 };
 
 export default withAuth;

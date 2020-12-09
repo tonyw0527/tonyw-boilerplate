@@ -1,5 +1,5 @@
 import { createContext, useContext } from 'react';
-import Cookies from 'js-cookie';
+import axios from 'axios';
 import { runInAction, autorun, makeAutoObservable } from 'mobx';
 
 class UserStore {
@@ -15,22 +15,22 @@ class UserStore {
             console.log('isLoggedIn', this.isLoggedIn);
         });
 
-        
     }
 
     // actions
-    checkIsToken() { 
-            const isToken = Cookies.get('isToken');
-            if(isToken){
-                runInAction(() => {
-                    this.isLoggedIn = true;
-                })
-            } else {
-                runInAction(() => {
-                    this.isLoggedIn = false;
-                })
-            }
-        
+    async checkIsToken() {
+        try {
+            const result = await axios.get('/auth/check')
+            runInAction(() => {
+                this.isLoggedIn = true;
+            })
+            return result;
+        } catch (err) {
+            runInAction(() => {
+                this.isLoggedIn = false;
+            })
+            throw err;
+        }
     }
 
     
@@ -48,7 +48,7 @@ const UserContext = createContext();
 // Provider - for index.js
 export const UserProvider = ({ children }) => {
     return (
-        <UserContext.Provider value={new UserStore} >
+        <UserContext.Provider value={new UserStore()} >
             {children}
         </UserContext.Provider>
     )

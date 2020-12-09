@@ -29,7 +29,7 @@ const authMiddleware = (req, res, next) => {
         next();
 
         
-        return res.json({
+        return res.status(200).json({
             message: 'token access allow'
         })
     })(req, res, next);
