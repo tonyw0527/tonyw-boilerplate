@@ -5,6 +5,8 @@ import { lightTheme, darkTheme } from "./styles/theme";
 import { useDarkMode } from "./styles/useDarkMode";
 import { GlobalStyle } from "./styles/global-styles";
 
+import DarkModeToggleButton from "./components/basics/DarkModeToggleButton";
+
 function App() {
   const [theme, toggleTheme, componentMounted] = useDarkMode();
 
@@ -15,14 +17,7 @@ function App() {
   return (
     <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
       <GlobalStyle />
-      {"test"}
-      <button
-        onClick={() => {
-          toggleTheme();
-        }}
-      >
-        Click!
-      </button>
+      <DarkModeToggleButton theme={theme} onHandleToggleTheme={toggleTheme} />
     </ThemeProvider>
   );
 }

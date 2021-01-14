@@ -4,6 +4,7 @@ import 'styled-components';
 // add the interface to the styled-components library.
 declare module 'styled-components' {
   export interface DefaultTheme {
+    mode: string;
 
     color: {
       body_background: string;

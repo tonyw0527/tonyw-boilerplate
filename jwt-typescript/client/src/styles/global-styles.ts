@@ -9,6 +9,7 @@ export const GlobalStyle = createGlobalStyle`
   body {
     background: ${({ theme }) => theme.color.body_background};
     color: ${({ theme }) => theme.color.body_text};
+    font-size: 16px;
   }
 
   * {
