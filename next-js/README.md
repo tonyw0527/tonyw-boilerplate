@@ -1,14 +1,18 @@
 # Tony West's Create Next App Boiler Plate
 
+## Main Libraries
+
+- typescript
+- React, Next js, Mobx, styled-components, MongoDB(for next js api routes)
+- express js
+
+## other Libraries
+
+- styled-normalize
+
 ## Features
 
 - Dark Mode
-
-## Libraries
-
-- typescript
-- styled-components
-- styled-normalize
 
 ## API Refernce
 
