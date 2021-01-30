@@ -1,11 +1,11 @@
 import { ReactNode } from "react";
 import Header from "./Header";
+import styled from "styled-components";
 
-const layoutStyle = {
-  margin: 20,
-  padding: 20,
-  border: "1px solid #DDD",
-};
+const Container = styled.div`
+  width: 100vh;
+  height: 100%;
+`;
 
 type LayoutProps = {
   children: ReactNode;
@@ -13,10 +13,10 @@ type LayoutProps = {
 };
 
 const Layout = ({ children, onToggleTheme }: LayoutProps) => (
-  <div style={layoutStyle}>
+  <Container>
     <Header onToggleTheme={onToggleTheme} />
     {children}
-  </div>
+  </Container>
 );
 
 export default Layout;

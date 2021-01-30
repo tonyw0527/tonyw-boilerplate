@@ -1,24 +1,38 @@
+import styled from "styled-components";
 import Link from "next/link";
 import DarkModeToggleButton from "./basics/DarkModeToggleButton";
 
-const linkStyle = {
-  marginRight: 15,
-};
+const Container = styled.div`
+  display: flex;
+  justify-content: start;
+  padding: 0.5rem 1.1rem;
+  width: 100%;
+`;
+
+const A = styled.a`
+  margin-right: 1rem;
+  font-size: 1.3rem;
+  margin-top: 0.3rem;
+
+  &: hover {
+    cursor: pointer;
+  }
+`;
 
 type HeaderProps = {
   onToggleTheme: () => void;
 };
 
 const Header = ({ onToggleTheme }: HeaderProps) => (
-  <div>
+  <Container>
     <DarkModeToggleButton onToggleTheme={onToggleTheme} />
     <Link href="/">
-      <a style={linkStyle}>Home</a>
+      <A>Home</A>
     </Link>
     <Link href="/about">
-      <a style={linkStyle}>About</a>
+      <A>Game</A>
     </Link>
-  </div>
+  </Container>
 );
 
 export default Header;

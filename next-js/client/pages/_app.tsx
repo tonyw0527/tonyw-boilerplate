@@ -5,6 +5,7 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "../styles/global-styles";
 import Layout from "../components/Layout";
 import { AppProps } from "next/app";
+import Head from "next/head";
 
 function App({ Component, pageProps }: AppProps) {
   const [theme, toggleTheme, componentMounted] = useDarkMode();
@@ -15,6 +16,10 @@ function App({ Component, pageProps }: AppProps) {
 
   return (
     <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Next App</title>
+      </Head>
       <StoreProvider {...pageProps}>
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
           <GlobalStyle />

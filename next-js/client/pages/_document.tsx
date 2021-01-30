@@ -34,12 +34,17 @@ export default class MyDocument extends Document {
         <Head>
           <meta charSet="utf-8" />
           <link rel="icon" href="/favicon.ico" />
+          <meta name="description" content="tonyw's next app boilerplate" />
+          {/* <meta property="og:url" content="http://histime.ga" /> */}
+          <meta property="og:title" content="Drawing Game" />
           <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1.0"
+            property="og:description"
+            content="=tonyw's next app boilerplate"
           />
-          <meta name="description" content="성경 읽기 사이트입니다." />
-          <title>성경 앱</title>
+          <meta
+            property="og:image"
+            // content="https://histime.ga/thumbnail.gif"
+          />
         </Head>
         <body>
           <Main />

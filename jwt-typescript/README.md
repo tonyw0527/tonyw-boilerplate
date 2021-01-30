@@ -1,3 +1,5 @@
+# 아직 작성 중입니다...
+
 # JWT BoilerPlate with Typescript
 
 - 빠르게 웹 서비스를 구축하기 위한 JWT 기반의 BoilerPlate 입니다. 타입스크립트로 작성하였습니다.
