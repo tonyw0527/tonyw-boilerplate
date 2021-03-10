@@ -1,24 +1,18 @@
 # Tony West's Create Next App Boiler Plate
 
-## Main Libraries
-
-- typescript
-- React, Next js, Mobx, styled-components, MongoDB(for next js api routes)
-- express js
-
-## other Libraries
-
-- styled-normalize
-
 ## Features
 
+- Next.js with Mobx and MongoDB
 - Dark Mode
+
+## Teck Stack
+
+- Typescript
+- React.js, Next.js, Mobx, Styled-components, MongoDB(for Next.js api routes)
 
 ## API Refernce
 
-### Pre Rendering
-
-#### Static Rendering
+### Static Rendering
 
 - rendering in build time.
 
@@ -61,10 +55,10 @@ export async function getServerSideProps(context) {
 - rendering in request time from client-side.
 
 ```javascript
-import useSWR from "swr";
+import useSWR from 'swr';
 
 function Profile() {
-  const { data, error } = useSWR("/api/user", fetch);
+  const { data, error } = useSWR('/api/user', fetch);
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
