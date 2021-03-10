@@ -22,7 +22,8 @@ Server
 - Express.js
 - Mysql
 - Sequelize
-- jsonwebtoken
+- Passport.js
+- Jsonwebtoken
 
 ## environments
 
